@@ -1,2 +1,2 @@
 # Data-structures-<br>
-Array, Stack , Queue , Linklist 
+Array, Stack , Queue , Linkedlist 
