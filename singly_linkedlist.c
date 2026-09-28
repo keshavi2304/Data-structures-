@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 struct node
 {
     int info;
     struct node *next;
 };
+
 struct node *first = NULL;
+
 struct node* create_node(int x)
 {
     struct node *temp;
@@ -14,6 +17,7 @@ struct node* create_node(int x)
     temp->next = NULL;
     return temp;
 }
+
 void insert_first()
 {
     int x;
@@ -21,14 +25,15 @@ void insert_first()
     printf("Enter value: ");
     scanf("%d", &x);
     temp = create_node(x);
-    if (first==NULL)
+    if (first == NULL)
         first = temp;
-    else{
-         temp->next = first;
-        first=temp;
+    else {
+        temp->next = first;
+        first = temp;
     }   
     printf("Node inserted at beginning.\n");
 }
+
 void insert_last()
 {
     int x;
@@ -46,17 +51,17 @@ void insert_last()
     else
     {
         p = first;
-
         while (p->next != NULL)
         {
             p = p->next;
         }
-
         p->next = temp;
     }
 
     printf("Node inserted at end.\n");
 }
+
+// FIXED FUNCTION
 void insert_position()
 {
     int x, pos, i;
@@ -68,23 +73,42 @@ void insert_position()
     printf("Enter position: ");
     scanf("%d", &pos);
 
-    temp = create_node(x);
-
-    if (first==NULL)
+    if (pos < 1)
     {
-        first = temp;
-
-        printf("Node inserted.\n");
+        printf("Invalid position.\n");
         return;
     }
-    p = first;
-while(i!=pos-1)
+
+    // If inserting at the very first position
+    if (pos == 1)
     {
-    p=p->next;
+        temp = create_node(x);
+        temp->next = first;
+        first = temp;
+        printf("Node inserted at position 1.\n");
+        return;
     }
+
+    p = first;
+    // Traverse to the node just before the insertion position (pos - 1)
+    for (i = 1; i < pos - 1 && p != NULL; i++)
+    {
+        p = p->next;
+    }
+
+    // If the position is beyond the current size of the list
+    if (p == NULL)
+    {
+        printf("Position out of bounds.\n");
+        return;
+    }
+
+    temp = create_node(x);
     temp->next = p->next;
-    p-> next=temp;
+    p->next = temp;
+    printf("Node inserted.\n");
 }
+
 void delete_first()
 {
     struct node *temp;
@@ -101,6 +125,7 @@ void delete_first()
 
     printf("First node deleted.\n");
 }
+
 void delete_last()
 {
     struct node *p, *temp;
@@ -129,6 +154,7 @@ void delete_last()
     }
     printf("Last node deleted.\n");
 }
+
 void delete_position()
 {
     int pos, i;
@@ -160,6 +186,7 @@ void delete_position()
     free(temp);
     printf("Node deleted.\n");
 }
+
 void display()
 {
     struct node *p;
@@ -178,13 +205,13 @@ void display()
     }
     printf("NULL\n");
 }
+
 int main()
 {
     int choice;
     do
     {
-        printf("1. Insert First\n 2. Insert Last\n 3. Insert Position\n 4. Delete First\n 5. Delete Last\n 6. Delete Position\n 7. Display\n 8. Exit\n" );
-        
+        printf("\n1. Insert First\n2. Insert Last\n3. Insert Position\n4. Delete First\n5. Delete Last\n6. Delete Position\n7. Display\n8. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -193,35 +220,27 @@ int main()
             case 1:
                 insert_first();
                 break;
-
             case 2:
                 insert_last();
                 break;
-
             case 3:
                 insert_position();
                 break;
-
             case 4:
                 delete_first();
                 break;
-
             case 5:
                 delete_last();
                 break;
-
             case 6:
                 delete_position();
                 break;
-
             case 7:
                 display();
                 break;
-
             case 8:
                 printf("Program ended.\n");
                 break;
-
             default:
                 printf("Invalid choice.\n");
         }
